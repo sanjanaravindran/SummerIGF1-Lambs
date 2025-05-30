@@ -48,10 +48,10 @@ temp_rw <- standardize_columns(temp_rw, c("IGF1", "PopSize", "Weight", "MumAge")
 
 
 # Prepare data list to pass to stan model
-data_survival <- prepare_data_list_ma(temp_s)
-data_survwt <- prepare_data_list_ma(temp_sw)
-data_repro <- prepare_data_list_ma(temp_r)
-data_reprowt <- prepare_data_list_ma(temp_rw)
+data_survival <- prepare_data_list(temp_s)
+data_survwt <- prepare_data_list(temp_sw)
+data_repro <- prepare_data_list(temp_r)
+data_reprowt <- prepare_data_list(temp_rw)
 
 # Run the model using cmdstanr
 file_s <- c("./StanModels/IGF_Survival_RAP.stan")
@@ -143,7 +143,7 @@ post_reprowt <- process_fit_bernwt_model_ma(fit_mod_reprowt, temp_rw,
     panel_bg(fill = "gray95", color = NA) +
     grid_lines(color = "white") +
     xlab("Normalized & Corrected IGF-1 Concentration") +
-    annotate("text", x=2, y=0.95, label= expression(beta[IGF-1]~"= 0.270 (95% CI: -0.034"~-~"0.595)")) +
+    annotate("text", x=1.75, y=0.95, label= expression(beta[IGF-1]~"= 0.270 (95% CI: -0.034"~-~"0.595)")) +
     theme(legend.text = element_text(size=14),
           legend.title = element_text(size=14))) 
 
@@ -158,7 +158,7 @@ post_reprowt <- process_fit_bernwt_model_ma(fit_mod_reprowt, temp_rw,
     panel_bg(fill = "gray95", color = NA) +
     grid_lines(color = "white") +
     xlab("Normalized & Corrected IGF-1 Concentration") +
-    annotate("text", x=2, y=0.95, label= expression(beta[IGF-1]~"= 0.107 (95% CI: -0.251"~-~"0.448)")) +
+    annotate("text", x=1.75, y=0.95, label= expression(beta[IGF-1]~"= 0.107 (95% CI: -0.251"~-~"0.448)")) +
     ggtitle("Model accounting for August body mass") +
     theme(legend.text = element_text(size=14),
           legend.title = element_text(size=14),
@@ -169,11 +169,11 @@ post_reprowt <- process_fit_bernwt_model_ma(fit_mod_reprowt, temp_rw,
     geom_line(data=post_repro$summary_500draws_mu,  aes(y=value, group=draw), colour="#a65e58", alpha=1/15) +
     geom_line(data=post_repro$mu_median,  aes(y=value), size=1.2, colour="#400101", alpha=0.8) +
     theme_cowplot() +
-    ylab("First-Year Reproductive Allocation") + 
+    ylab("First-Year Reproduction") + 
     xlab("") +
     panel_bg(fill = "gray95", color = NA) +
     grid_lines(color = "white") +
-    annotate("text", x=2, y=0.95, label= expression(beta[IGF-1]~"= 0.384 (95% CI: 0.082"~-~"0.694)")) +
+    annotate("text", x=1.75, y=0.95, label= expression(beta[IGF-1]~"= 0.384 (95% CI: 0.082"~-~"0.694)")) +
     theme(legend.text = element_text(size=14),
           legend.title = element_text(size=14)))
 
@@ -182,11 +182,11 @@ post_reprowt <- process_fit_bernwt_model_ma(fit_mod_reprowt, temp_rw,
     geom_line(data=post_reprowt$summary_500draws_mu,  aes(y=value, group=draw), colour="#fa9500", alpha=1/15) +
     geom_line(data=post_reprowt$mu_median,  aes(y=value), size=1.2, colour="#ff7f51", alpha=0.8) +
     theme_cowplot() +
-    ylab("First-Year Reproductive Allocation") + 
+    ylab("First-Year Reproduction") + 
     xlab("") +
     panel_bg(fill = "gray95", color = NA) +
     grid_lines(color = "white") +
-    annotate("text", x=2, y=0.95, label= expression(beta[IGF-1]~"= 0.275 (95% CI: -0.088"~-~"0.620)")) +
+    annotate("text", x=1.75, y=0.95, label= expression(beta[IGF-1]~"= 0.270 (95% CI: -0.110"~-~"0.630)")) +
     ggtitle("Model accounting for August body mass") +
     theme(legend.text = element_text(size=14),
           legend.title = element_text(size=14),
@@ -195,7 +195,7 @@ post_reprowt <- process_fit_bernwt_model_ma(fit_mod_reprowt, temp_rw,
 # Save both survival and repro plots
 plot_fin <- (plot_repro + plot_reprowt) /(plot_surv + plot_survwt) + plot_annotation(tag_levels = 'A')
 plot_fin
-# ggsave("Dec24_IGFReproAndSurv_Fig4.tiff", plot_fin, dpi=600, height = 10, bg="white" )
+ggsave("May25_IGFReproAndSurv_Fig4.tiff", plot_fin, dpi=600, height = 10, bg="white" )
 
 
 # Model summary
