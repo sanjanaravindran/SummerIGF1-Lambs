@@ -8,7 +8,7 @@ setwd("~/Desktop/IGF1_MS/Analysis/R_Scripts")
 source("00_functions.R")
 
 # Read Data
-igf_lh_data <- read.csv('2025Mar_LambIGF1.csv',  header = T, stringsAsFactors = F, fileEncoding="UTF-8-BOM")
+igf_lh_data <- read.csv('2025Mar_LambIGF1_Anon.csv',  header = T, stringsAsFactors = F, fileEncoding="UTF-8-BOM")
 
 # Recoding Sex as female or not
 igf_lh_data <- igf_lh_data %>%
